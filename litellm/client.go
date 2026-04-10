@@ -256,6 +256,10 @@ func (c *Client) parseKeyResponse(resp map[string]interface{}) (*Key, error) {
 					}
 				}
 			}
+		case "router_settings":
+			if m, ok := v.(map[string]interface{}); ok {
+				createdKey.RouterSettings = m
+			}
 		}
 	}
 

@@ -135,6 +135,11 @@ func resourceKey() *schema.Resource {
 				Optional: true,
 				Elem:     &schema.Schema{Type: schema.TypeString},
 			},
+			"router_settings": {
+				Type:     schema.TypeMap,
+				Optional: true,
+				Elem:     &schema.Schema{Type: schema.TypeString},
+			},
 			"spend": {
 				Type:     schema.TypeFloat,
 				Computed: true,
@@ -247,6 +252,7 @@ func mapResourceDataToKey(d *schema.ResourceData, key *Key) {
 	key.ModelTPMLimit = d.Get("model_tpm_limit").(map[string]interface{})
 	key.Guardrails = expandStringList(d.Get("guardrails").([]interface{}))
 	key.Tags = expandStringList(d.Get("tags").([]interface{}))
+	key.RouterSettings = d.Get("router_settings").(map[string]interface{})
 
 	applyServiceAccountSettings(d, key)
 }
@@ -322,6 +328,9 @@ func mapKeyToResourceData(d *schema.ResourceData, key *Key) {
 	}
 	if len(key.Tags) > 0 {
 		d.Set("tags", key.Tags)
+	}
+	if key.RouterSettings != nil {
+		d.Set("router_settings", key.RouterSettings)
 	}
 	if key.Spend != 0 {
 		d.Set("spend", key.Spend)

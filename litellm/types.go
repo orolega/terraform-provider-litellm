@@ -113,6 +113,7 @@ type Key struct {
 	Guardrails               []string               `json:"guardrails,omitempty"`
 	Blocked                  bool                   `json:"blocked"`
 	Tags                     []string               `json:"tags,omitempty"`
+	RouterSettings           map[string]interface{} `json:"router_settings,omitempty"`
 }
 
 // KeyResponse represents a response from the API containing key information.
