@@ -104,6 +104,21 @@ resource "litellm_key" "with_logging" {
 }
 ```
 
+### Key with Router Settings
+
+```hcl
+resource "litellm_key" "with_router_settings" {
+  key_alias = "router-key"
+  models    = ["gpt-4o", "gpt-3.5-turbo"]
+
+  router_settings = {
+    "model_group_retry_policy" = jsonencode({
+      "max_retries" = 5
+    })
+  }
+}
+```
+
 ## Argument Reference
 
 The following arguments are supported:
@@ -169,6 +184,8 @@ The following arguments are supported:
 * `enforced_params` - (Optional) List of enforced parameters for this key.
 
 * `tags` - (Optional) List of tags. **Note:** Requires LiteLLM Enterprise license.
+
+* `router_settings` - (Optional) Map of router settings for key-specific routing behavior. Example: `{"model_group_retry_policy" = jsonencode({"max_retries" = 5})}`. Values are strings; use `jsonencode()` for nested objects.
 
 * `blocked` - (Optional) Whether this key is blocked.
 
